@@ -3,7 +3,7 @@ return {
     "catppuccin/nvim",
     name = "catppuccin",
     opts = {
-      flavour = "latte", -- Це саме та світла версія
+      flavour = "latte",
     },
   },
   {

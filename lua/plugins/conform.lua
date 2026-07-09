@@ -1,3 +1,20 @@
+local function get_prettier_xml_plugin_path()
+  -- A list of paths to check, in order of priority
+  local paths = {
+    vim.fn.expand("~/.npm-global/lib/node_modules/@prettier/plugin-xml/src/plugin.js"),
+    "/opt/homebrew/lib/node_modules/@prettier/plugin-xml/src/plugin.js",
+    "/usr/local/lib/node_modules/@prettier/plugin-xml/src/plugin.js",
+  }
+
+  for _, path in ipairs(paths) do
+    if vim.fn.filereadable(path) == 1 then
+      return path
+    end
+  end
+
+  return "@prettier/plugin-xml"
+end
+
 return {
   "stevearc/conform.nvim",
   opts = {
@@ -12,9 +29,8 @@ return {
         prepend_args = {
           "--parser",
           "xml",
-          -- Pointing directly to the plugin.js file as demanded by Node's ESM resolution
           "--plugin",
-          vim.fn.expand("~/.npm-global/lib/node_modules/@prettier/plugin-xml/src/plugin.js"),
+          get_prettier_xml_plugin_path(),
           "--print-width",
           "120",
         },
